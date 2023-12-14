@@ -3,18 +3,16 @@ from pathlib import Path
 import logging
 from logging.handlers import TimedRotatingFileHandler
 from datetime import datetime
-import environ
+from dotenv import load_dotenv
 
-env = environ.Env(
-    # set casting, default value
-    DEBUG=(bool, False)
-)
+load_dotenv()
 
-BASE_DIR = Path(__file__).resolve().parent.parent
 
-environ.Env.read_env(BASE_DIR / '.env')
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-LOGS_DIR = env('DJANGO_LOG_FOLDER')
+
+
+LOGS_DIR = os.getenv('LOGS_DIR')
 
 class LevelFilter(logging.Filter):
     def __init__(self, level):
